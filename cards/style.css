@@ -15,25 +15,41 @@
 }
 
 .card{
+    flex-direction: column;
     perspective: 150rem;
     -moz-perspective: 150rem;
     height: 75%;
-    width: 200px;
-    border-radius: 20px;
-    background-color: beige;
     margin: auto;
-    border: 3px solid brown;
     position:relative;
     display: flex;
-    transition: all 0.8s;
 }
 
-.card:hover{
+.card-side{
+    transition: all 0.8s;
+    width: 200px;
+    border-radius: 20px;
+    border: 3px solid brown;
+    display: flex;
+    margin: auto;
+    height: 100%;
+}
+
+.card-side-front{
+    background-color: beige;
+}
+
+.card-side-back{
+    background-color: yellow;
     transform: rotateY(180deg);
 }
 
-.card p {
-    margin: auto;
+.card:hover .card-side-back{
+    transform: rotateY(0);
+}
+
+
+.card:hover .card-side-front{
+    transform: rotateY(180deg);
 }
 
 .btn {
