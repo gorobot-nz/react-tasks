@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+.container{
+    display: flex;
+    margin: auto;
+    width: 80%;
+}
+
+.card-container {
+    height: 500px;
+}
+
+.card{
+    perspective: 150rem;
+    -moz-perspective: 150rem;
+    height: 75%;
+    width: 200px;
+    border-radius: 20px;
+    background-color: beige;
+    margin: auto;
+    border: 3px solid brown;
+    position:relative;
+    display: flex;
+    transition: all 0.8s;
+}
+
+.card:hover{
+    transform: rotateY(180deg);
+}
+
+.card p {
+    margin: auto;
+}
+
+.btn {
+    border: 5px solid red;
+    border-radius: 5px;
+    margin: auto;
+    width: 15%;
+    height: 50px;
+}
+
+.btn:hover{
+    background-color: red;
+}
