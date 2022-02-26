@@ -1,7 +1,12 @@
 class Card {
-    constructor(text, startColor, middleColor, endColor){
+    constructor(text, color){
         this.text = text
-        this.gradientColor = `linear-gradient(${startColor}, ${endColor})`
+        this.color = color
+    }
+
+    setCardSideStyles(element, name){
+        element.className = name
+        element.style.background = this.color
     }
 
     getDomCard(){
@@ -10,11 +15,8 @@ class Card {
         const cardBackSide = document.createElement('div')
 
         card.className = 'card';
-        cardFrontSide.className = 'card-side card-front'
-        cardBackSide.className = 'card-side card-back'
-
-        cardFrontSide.style.background = this.gradientColor
-        cardBackSide.style.background = this.gradientColor
+        this.setCardSideStyles(cardFrontSide, 'card-side card-front')
+        this.setCardSideStyles(cardBackSide, 'card-side card-back')
 
         const backParagpaph = document.createElement('p')
         backParagpaph.innerHTML = this.text
@@ -29,7 +31,7 @@ class Card {
 }
 
 function getRandomColor() {       
-    const letters = 'BCDEF'.split('');       
+    const letters = '0123456789ABCDEF'.split('');       
     let color = '#';       
     
     for (var i = 0; i < 6; i++) {          
@@ -51,26 +53,58 @@ function getRandomSentence(length) {
     return sentence;    
 }
 
+function createGradient(){
+    let startColor = getRandomColor()
+    let endColor = getRandomColor()
+
+    return `linear-gradient(${startColor}, ${endColor})`
+}
+
 const cards = [];
 
-const btn = document.querySelector(".btn")
+const FIRST = 'first'
+const LAST = 'last'
+
+const addFirstbutton = document.querySelector("#insert-first")
+const addLastbutton = document.querySelector("#insert-last")
 const cardContainer = document.querySelector(".card-container")
 
-window.addEventListener("load", function(event) {
-    console.log(cardContainer)
-});
-
-btn.addEventListener('click', function(e){
-    startColor = getRandomColor()
-    middleColor = getRandomColor()
-    endColor = getRandomColor()
-    sentence = getRandomSentence(20)    
-
-    console.log(sentence)
-
-    card = new Card(sentence, startColor, middleColor, endColor)
-    cards.push(card)
+addFirstbutton.addEventListener('click', function(e) {
     e.preventDefault()
-    cardContainer.appendChild(card.getDomCard())
-    console.log(cardContainer)
+    createCard(FIRST)
 })
+
+addLastbutton.addEventListener('click', function(e) {
+    e.preventDefault()
+    createCard(LAST)
+})
+
+function createCard (position){
+    if (cards.length == 20){
+        alert("Enought cards")
+        return
+    }
+
+    let sentence = getRandomSentence(20)    
+    let color = createGradient()
+
+    const card = new Card(sentence, color)
+    addToList(card.getDomCard(), position)
+}
+
+function addToList(node, position){
+    if (position === FIRST){
+        cards.push(node)
+    } else {
+        cards.unshift(node)
+    }
+    render(node, position)
+}
+
+function render(node, position) {
+    if (position === FIRST){
+        cardContainer.insertBefore(node, cardContainer.firstChild)
+    } else {
+        cardContainer.appendChild(node)
+    }
+}
