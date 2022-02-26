@@ -15,23 +15,23 @@
 }
 
 .card{
-    flex-direction: column;
     perspective: 150rem;
     -moz-perspective: 150rem;
     height: 75%;
-    margin: auto;
-    position:relative;
     display: flex;
+    margin: auto;
 }
 
 .card-side{
-    transition: all 0.8s;
+    transition: all 0.8s ease;
     width: 200px;
     border-radius: 20px;
     border: 3px solid brown;
-    display: flex;
-    margin: auto;
     height: 100%;
+    position: absolute;
+    top:0;
+    left: 0;
+    backface-visibility: hidden;
 }
 
 .card-side-front{
