@@ -1,3 +1,12 @@
+const cards = [];
+
+const FIRST = 'first'
+const LAST = 'last'
+
+const addFirstbutton = document.querySelector("#insert-first")
+const addLastbutton = document.querySelector("#insert-last")
+const cardContainer = document.querySelector(".card-container")
+
 class Card {
     constructor(text, color){
         this.text = text
@@ -15,6 +24,7 @@ class Card {
         const cardBackSide = document.createElement('div')
 
         card.className = 'card';
+        card.id = cards.length;
         this.setCardSideStyles(cardFrontSide, 'card-side card-front')
         this.setCardSideStyles(cardBackSide, 'card-side card-back')
 
@@ -59,15 +69,6 @@ function createGradient(){
 
     return `linear-gradient(${startColor}, ${endColor})`
 }
-
-const cards = [];
-
-const FIRST = 'first'
-const LAST = 'last'
-
-const addFirstbutton = document.querySelector("#insert-first")
-const addLastbutton = document.querySelector("#insert-last")
-const cardContainer = document.querySelector(".card-container")
 
 addFirstbutton.addEventListener('click', function(e) {
     e.preventDefault()
