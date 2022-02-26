@@ -1,7 +1,7 @@
 class Card {
-    constructor(text, color){
+    constructor(text, startColor, middleColor, endColor){
         this.text = text
-        this.color = color
+        this.gradientColor = `linear-gradient(${startColor}, ${endColor})`
     }
 
     getDomCard(){
@@ -12,8 +12,9 @@ class Card {
         card.className = 'card';
         cardFrontSide.className = 'card-side card-front'
         cardBackSide.className = 'card-side card-back'
-        cardFrontSide.style.backgroundColor = this.color
-        cardBackSide.style.backgroundColor = this.color
+
+        cardFrontSide.style.background = this.gradientColor
+        cardBackSide.style.background = this.gradientColor
 
         const backParagpaph = document.createElement('p')
         backParagpaph.innerHTML = this.text
@@ -60,12 +61,14 @@ window.addEventListener("load", function(event) {
 });
 
 btn.addEventListener('click', function(e){
-    color = getRandomColor()
+    startColor = getRandomColor()
+    middleColor = getRandomColor()
+    endColor = getRandomColor()
     sentence = getRandomSentence(20)    
 
     console.log(sentence)
 
-    card = new Card(sentence, color)
+    card = new Card(sentence, startColor, middleColor, endColor)
     cards.push(card)
     e.preventDefault()
     cardContainer.appendChild(card.getDomCard())
