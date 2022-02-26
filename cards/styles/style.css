@@ -55,6 +55,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    backface-visibility: hidden;
 }
 
 .card .card-side p{
