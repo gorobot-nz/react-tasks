@@ -63,11 +63,6 @@
     background-color: var(--class-item-bg);
 }
 
-.card .card-front{
-    background-color: aqua;
-}
-
 .card .card-back{
-    background-color: aquamarine;
     transform: rotateY(180deg);
 }
