@@ -86,7 +86,7 @@ function createCard (position){
         return
     }
 
-    let sentence = getRandomSentence(20)    
+    let sentence = getRandomSentence(10)    
     let color = createGradient()
 
     const card = new Card(sentence, color)
