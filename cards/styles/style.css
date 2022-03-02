@@ -59,6 +59,7 @@
     justify-content: center;
     align-items: center;
     backface-visibility: hidden;
+    border: 5px black solid;
 }
 
 .card .card-side p{
