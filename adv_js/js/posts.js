@@ -4,6 +4,7 @@ const comments = new Map()
 
 const button = document.querySelector('#comment-button')
 const commentsContainer = document.querySelector('#comments-container')
+console.log(commentsContainer.style.display)
 
 class User {
     constructor(id, name, username) {
