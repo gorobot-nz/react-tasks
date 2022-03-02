@@ -39,8 +39,7 @@ window.onload = async() => {
 }
 
 button.addEventListener('click', function(e) {
-    console.log(commentsContainer.style)
-    e.preventDefault()
+    console.log(commentsContainer.style.display)
     if (commentsContainer.style.display === 'none'){
         commentsContainer.style.display === 'flex'
         button.innerHTML = 'Hide'
