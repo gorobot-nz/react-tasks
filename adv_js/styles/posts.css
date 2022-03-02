@@ -16,7 +16,6 @@
     height: 100px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
 }
 
 .post-card .post-card-header .post-title{
