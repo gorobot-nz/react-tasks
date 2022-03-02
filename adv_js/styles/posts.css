@@ -41,6 +41,7 @@
     width: auto;
     margin-top: 6px;
     margin-right: 20px;
+    box-shadow: 3px 3px gray ;
 }
 
 .post-card .post-card-body{
@@ -60,7 +61,7 @@
     height: 60px;
 }
 
-.post-card .post-card-button-container button{
+.post-card .post-card-button-container .comment-button{
     margin-top: 20px;
     margin-right: 30px;
     height: 40%;
@@ -84,6 +85,7 @@
     border: black 5px solid;
     border-radius: 10px;
     background-color: #adb5bd;
+    box-shadow: 3px 3px gray ;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -111,6 +113,7 @@
 }
 
 .post-card .comments-container .comment .comment-header .comment-header-mail {
+    margin: auto;
 }
 
 .post-card .comments-container .comment .comment-body{

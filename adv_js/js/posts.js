@@ -2,6 +2,9 @@ const posts = new Map()
 const users = new Map()
 const comments = new Map()
 
+const button = document.querySelector('#comment-button')
+const commentsContainer = document.querySelector('#comments-container')
+
 class User {
     constructor(id, name, username) {
         this.id = id
@@ -33,7 +36,16 @@ window.onload = async() => {
         const user = new User(item.id, item.name, item.username)
         users.set(user.id, user)
     });
-
-    console.log(posts)
-    console.log(users)
 }
+
+button.addEventListener('click', function(e) {
+    console.log(commentsContainer.style)
+    e.preventDefault()
+    if (commentsContainer.style.display === 'none'){
+        commentsContainer.style.display === 'flex'
+        button.innerHTML = 'Hide'
+    } else {
+        commentsContainer.style.display === 'none'
+        button.innerHTML = 'Show'
+    }
+})

@@ -19,6 +19,7 @@ hr{
     display: flex;
     flex-direction: column;
     background-color: rgba(121, 111, 111, 0.26);
+    box-shadow: 3px 3px gray ;
 }
 
 .album-card .album-card-header{
@@ -51,6 +52,7 @@ hr{
     width: auto;
     margin-top: 6px;
     margin-right: 20px;
+    box-shadow: 3px 3px gray ;
 }
 
 .album-card .album-card-photos{
@@ -64,6 +66,7 @@ hr{
     margin: 10px;
     height: 165px;
     width: 255px;
+    box-shadow: 3px 3px gray ;
 }
 
 .album-card .album-card-photos .thumbnail-photo-container #thumbnail-photo{
