@@ -2,7 +2,6 @@ const posts = new Map()
 const users = new Map()
 const comments = new Map()
 
-
 class User {
     constructor(id, name, username) {
         this.id = id
@@ -27,6 +26,7 @@ window.onload = async() => {
         const post = new Post(item.id, item.userId, item.title, item.body)
         posts.set(post.id, post)
     });
+    
     const usersResponce = await fetch('https://jsonplaceholder.typicode.com/users')
     const usersData = await usersResponce.json()
     usersData.forEach(item => {

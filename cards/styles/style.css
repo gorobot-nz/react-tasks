@@ -10,8 +10,6 @@
 }
 
 .card-container{
-    perspective: 150rem;
-    -moz-perspective: 150rem;
     margin: auto;
     width: 80%;
     height: 80%;
