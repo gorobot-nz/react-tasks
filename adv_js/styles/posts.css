@@ -13,7 +13,7 @@
 }
 
 .post-card .post-card-header{
-    height: 20%;
+    height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -24,12 +24,12 @@
     border-radius: 50%;
     height: 80%;
     width: auto;
-    margin-top: 5px;
-    margin-right: 10px;
+    margin-top: 6px;
+    margin-right: 20px;
 }
 
 .post-card .post-card-body{
-    height: 60%;
+    height: 200px;
     display: flex;
 }
 
@@ -42,7 +42,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    height: 20%;
+    height: 100px;
 }
 
 .post-card .post-card-comments button{

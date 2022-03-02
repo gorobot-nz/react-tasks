@@ -10,13 +10,13 @@ header{
     height: 100px;
     display: flex;
     background-color: #48cae4;
+    box-shadow: 3px 3px #0096c7 ;
     border-radius: 5px;
     width: 80%;
 }
 
 main {
     margin: auto;
-    margin-top: 25px;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -34,6 +34,7 @@ header .header-container {
 header .header-container .link {
     margin: auto;
     background-color: #ade8f4;
+    box-shadow: 3px 3px #03045e;
     width: 85px;
     border-radius: 5px;
     display: flex;
