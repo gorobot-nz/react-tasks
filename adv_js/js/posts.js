@@ -4,7 +4,10 @@ const comments = new Map()
 
 const button = document.querySelector('#comment-button')
 const commentsContainer = document.querySelector('#comments-container')
-console.log(commentsContainer.style.display)
+const userAvatar = document.querySelector('#user-avatar')
+const userInfo = document.querySelector('#user-info')
+
+const check = document.getElementById('comments-container')
 
 class User {
     constructor(id, name, username) {
@@ -23,14 +26,14 @@ class Post {
     }
 }
 
-window.onload = async() => {
+window.onload = async () => {
     const postsResponce = await fetch('https://jsonplaceholder.typicode.com/posts')
     const postsData = await postsResponce.json()
     postsData.forEach(item => {
         const post = new Post(item.id, item.userId, item.title, item.body)
         posts.set(post.id, post)
     });
-    
+
     const usersResponce = await fetch('https://jsonplaceholder.typicode.com/users')
     const usersData = await usersResponce.json()
     usersData.forEach(item => {
@@ -39,13 +42,23 @@ window.onload = async() => {
     });
 }
 
-button.addEventListener('click', function(e) {
-    console.log(commentsContainer.style.display)
-    if (commentsContainer.style.display === 'none'){
-        commentsContainer.style.display === 'flex'
-        button.innerHTML = 'Hide'
-    } else {
-        commentsContainer.style.display === 'none'
+button.onclick = function(){
+    const className = commentsContainer.className
+    console.log(className)
+    if (className === 'comments-container'){
+        commentsContainer.className = 'section-hidden'
         button.innerHTML = 'Show'
+    } else {
+        commentsContainer.className = 'comments-container'
+        button.innerHTML = 'Hide'
     }
-})
+}
+
+userAvatar.onclick = function() {
+    const className = userInfo.className
+    if (className === 'post-card-user-info-container') {
+        userInfo.className = 'section-hidden'
+    } else {
+        userInfo.className = 'post-card-user-info-container'
+    }
+}

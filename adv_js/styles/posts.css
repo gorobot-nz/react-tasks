@@ -1,3 +1,7 @@
+.section-hidden {
+    display: none   ;
+}
+
 .post-card{
     border: black 5px solid;
     border-radius: 20px;
@@ -16,6 +20,7 @@
     height: 100px;
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
 }
 
 .post-card .post-card-header .post-title{
@@ -42,6 +47,27 @@
     margin-top: 6px;
     margin-right: 20px;
     box-shadow: 3px 3px gray ;
+}
+
+.post-card .post-card-header .post-card-user-info-container{
+    height: 90px;
+    margin-top: 3px;
+    width: 200px;
+    background-color: rgba(177, 177, 177, 0.377);
+    box-shadow: 3px 3px gray ;
+    position: absolute;
+    margin-right: 150px;
+    border-radius: 20px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.post-card .post-card-header .post-card-user-info-container .user-data{
+    margin-left: 15px;
+    margin-bottom: 3px;
 }
 
 .post-card .post-card-body{
