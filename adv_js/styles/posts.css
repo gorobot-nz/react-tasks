@@ -1,56 +1,56 @@
-.post-card{
+.post-card {
     border: black 5px solid;
     border-radius: 20px;
     margin-top: 20px;
     height: auto;
     background-color: whitesmoke;
-    box-shadow: 3px 3px gray ;
+    box-shadow: 3px 3px gray;
 }
 
-.post-card hr{
+.post-card hr {
     background-color: black;
     margin: 0px;
 }
 
-.post-card .post-card-header{
+.post-card .post-card-header {
     height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
 
-.post-card .post-card-header .post-title{
+.post-card .post-card-header .post-title {
     display: flex;
     justify-content: center;
     width: 85%;
 }
 
-.post-card .post-card-header .post-title h1{
+.post-card .post-card-header .post-title h1 {
     margin: auto;
 }
 
-.post-card .post-card-header .post-user-avatar{
+.post-card .post-card-header .post-user-avatar {
     display: flex;
     justify-content: flex-end;
     width: 15%;
 }
 
-.post-card .post-card-header .post-user-avatar .avatar{
+.post-card .post-card-header .post-user-avatar .avatar {
     border: 2px solid black;
     border-radius: 50%;
     height: 80%;
     width: auto;
     margin-top: 6px;
     margin-right: 20px;
-    box-shadow: 3px 3px gray ;
+    box-shadow: 3px 3px gray;
 }
 
-.post-card .post-card-header .post-card-user-info-container{
+.post-card .post-card-header .post-card-user-info-container {
     height: 90px;
     margin-top: 3px;
     width: 200px;
     background-color: rgba(177, 177, 177, 0.377);
-    box-shadow: 3px 3px gray ;
+    box-shadow: 3px 3px gray;
     position: absolute;
     margin-right: 150px;
     border-radius: 20px;
@@ -61,29 +61,29 @@
 }
 
 
-.post-card .post-card-header .post-card-user-info-container .user-data{
+.post-card .post-card-header .post-card-user-info-container .user-data {
     margin-left: 15px;
     margin-bottom: 3px;
 }
 
-.post-card .post-card-body{
+.post-card .post-card-body {
     height: 200px;
     display: flex;
 }
 
-.post-card .post-card-body p{
+.post-card .post-card-body p {
     margin: auto;
     width: 90%;
 }
 
-.post-card .post-card-button-container{
+.post-card .post-card-button-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     height: 60px;
 }
 
-.post-card .post-card-button-container .comment-button{
+.post-card .post-card-button-container .comment-button {
     margin-top: 20px;
     margin-right: 30px;
     height: 40%;
@@ -91,7 +91,7 @@
     border: hidden;
     border-radius: 5px;
     background-color: rgb(194, 181, 181);
-    box-shadow: 3px 3px gray ;
+    box-shadow: 3px 3px gray;
 }
 
 .post-card .comments-container {
@@ -107,7 +107,7 @@
     border: black 5px solid;
     border-radius: 10px;
     background-color: #adb5bd;
-    box-shadow: 3px 3px gray ;
+    box-shadow: 3px 3px gray;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -138,7 +138,7 @@
     margin: auto;
 }
 
-.post-card .comments-container .comment .comment-body{
+.post-card .comments-container .comment .comment-body {
     height: 80%;
     padding: 5px;
 }

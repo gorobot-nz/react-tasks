@@ -1,16 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
+*::-webkit-scrollbar {
+    width: 0px;
+}
+
 body {
     font-family: 'Ubuntu';
 }
 
-header{
+header {
     margin: auto;
     margin-top: 25px;
     height: 100px;
     display: flex;
     background-color: #48cae4;
-    box-shadow: 3px 3px #0096c7 ;
+    box-shadow: 3px 3px #0096c7;
     border-radius: 5px;
     width: 80%;
 }
@@ -24,12 +28,12 @@ main {
 }
 
 .section-hidden {
-    display: none   ;
+    display: none;
 }
 
 header .header-container {
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     justify-content: center;
     margin: auto;
     width: 100%;
@@ -44,14 +48,14 @@ header .header-container .link {
     display: flex;
 }
 
-header .header-container .link a{
-    margin:auto;
+header .header-container .link a {
+    margin: auto;
     float: left;
     color: black;
     text-align: center;
     padding: 12px;
     text-decoration: none;
-    font-size: 18px; 
+    font-size: 18px;
     line-height: 25px;
     border-radius: 4px;
 }
