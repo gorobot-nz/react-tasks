@@ -23,6 +23,10 @@ main {
     width: 80%;
 }
 
+.section-hidden {
+    display: none   ;
+}
+
 header .header-container {
     display: flex;
     flex-direction:row;
