@@ -31,6 +31,10 @@ main {
     display: none;
 }
 
+.section-block {
+    display: block;
+}
+
 header .header-container {
     display: flex;
     flex-direction: row;

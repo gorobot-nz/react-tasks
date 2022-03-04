@@ -30,6 +30,8 @@ class Post {
 
         const titleInner = document.createElement('h1')
         titleInner.innerHTML = this.title
+        titleInner.className = 'post-title-h1'
+        titleInner.id = `title-${this.id}`
 
         title.appendChild(titleInner)
 
@@ -51,11 +53,11 @@ class Post {
 
         const userName = document.createElement('div')
         userName.className = 'user-data'
-        userName.innerHTML = userInfo.name
+        userName.innerHTML = `Name: ${userInfo.name}`
 
         const userUsername = document.createElement('div')
         userUsername.className = 'user-data'
-        userUsername.innerHTML = userInfo.username
+        userUsername.innerHTML = `Username: ${userInfo.username}`
 
 
         userInfoContainer.appendChild(userName)
@@ -202,11 +204,14 @@ window.onload = async () => {
         avatar.onclick = function (e) {
             const avatarId = e.target.id.split('-').pop()
             const userInfo = document.querySelector(`#user-info-${avatarId}`)
+            const cardTitle = document.querySelector(`#title-${avatarId}`)
             const className = userInfo.className
             if (className === 'post-card-user-info-container') {
                 userInfo.className = 'section-hidden'
+                cardTitle.className = 'post-title-h1'
             } else {
                 userInfo.className = 'post-card-user-info-container'
+                cardTitle.className = 'section-hidden'
             }
         }
     })
