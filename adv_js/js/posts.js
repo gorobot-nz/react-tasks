@@ -2,12 +2,10 @@ const posts = new Map()
 const users = new Map()
 const comments = new Map()
 
-const button = document.querySelector('#comment-button')
-const commentsContainer = document.querySelector('#comments-container')
-const userAvatar = document.querySelector('#user-avatar')
-const userInfo = document.querySelector('#user-info')
+const buttons = document.querySelectorAll(`[id^="comment-button"]`);
+const userAvatars = document.querySelectorAll(`[id^="user-avatar"]`)
 
-const check = document.getElementById('comments-container')
+console.log(userAvatars)
 
 class User {
     constructor(id, name, username) {
@@ -22,6 +20,16 @@ class Post {
         this.id = id
         this.userId = userId
         this.title = title
+        this.body = body
+    }
+}
+
+class Comment {
+    constructor(id, postId, name, email, body) {
+        this.id = id
+        this.postId = postId
+        this.name = name
+        this.email = email
         this.body = body
     }
 }
@@ -42,23 +50,33 @@ window.onload = async () => {
     });
 }
 
-button.onclick = function(){
-    const className = commentsContainer.className
-    console.log(className)
-    if (className === 'comments-container'){
-        commentsContainer.className = 'section-hidden'
-        button.innerHTML = 'Show'
-    } else {
-        commentsContainer.className = 'comments-container'
-        button.innerHTML = 'Hide'
+buttons.forEach(button => {
+    button.onclick = function (e) {
+        const buttonId = e.target.id.split('-').pop()
+        console.log(buttonId)
+        const commentsContainer = document.querySelector(`#comments-container-${buttonId}`)
+        console.log(commentsContainer)
+        const className = commentsContainer.className
+        if (className === 'section-hidden') {
+            commentsContainer.className = 'comments-container'
+            button.innerHTML = 'Hide'
+        } else {
+            commentsContainer.className = 'section-hidden'
+            button.innerHTML = 'Show'
+        }
     }
-}
+})
 
-userAvatar.onclick = function() {
-    const className = userInfo.className
-    if (className === 'post-card-user-info-container') {
-        userInfo.className = 'section-hidden'
-    } else {
-        userInfo.className = 'post-card-user-info-container'
+userAvatars.forEach(avatar => {
+    avatar.onclick = function (e) { 
+        const avatarId = e.target.id.split('-').pop() 
+        console.log(avatarId)
+        const userInfo = document.querySelector(`#user-info-${avatarId}`)
+        const className = userInfo.className
+        if (className === 'post-card-user-info-container') {
+            userInfo.className = 'section-hidden'
+        } else {
+            userInfo.className = 'post-card-user-info-container'
+        }
     }
-}
+})
