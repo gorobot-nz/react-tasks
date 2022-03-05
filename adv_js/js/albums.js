@@ -103,7 +103,6 @@ window.onload = async () => {
 
     renderSelect()
 
-
     async function getAlbums() {
         const albumsResponce = await fetch('https://jsonplaceholder.typicode.com/albums')
         const albumsData = await albumsResponce.json()
