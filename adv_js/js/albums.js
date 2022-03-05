@@ -1,5 +1,14 @@
 const albums = new Map()
 const photos = new Map()
+const users = new Map()
+
+class User {
+    constructor(id, name, username) {
+        this.id = id
+        this.name = name
+        this.username = username
+    }
+}
 
 class Album {
     constructor(id, title, userId) {
@@ -85,8 +94,13 @@ window.onload = async () => {
     const modalLayout = document.querySelector('#modal-layout')
     const modalTitle = document.querySelector('#modal-title')
     const modalContent = document.querySelector('#modal-content')
+    const select = document.querySelector('#users-select')
+    select.onchange = selectChange
 
     await getAlbums()
+    await getUsers()
+
+    renderSelect()
 
     async function getAlbums() {
         const albumsResponce = await fetch('https://jsonplaceholder.typicode.com/albums')
@@ -96,6 +110,15 @@ window.onload = async () => {
             albums.set(album.id, album)
             const thumbinailPhotos = await getPhotos(album.id)
             renderAlbum(album, thumbinailPhotos)
+        });
+    }
+
+    async function getUsers() {
+        const usersResponce = await fetch('https://jsonplaceholder.typicode.com/users')
+        const usersData = await usersResponce.json()
+        usersData.forEach(item => {
+            const user = new User(item.id, item.name, item.username)
+            users.set(user.id, user)
         });
     }
 
@@ -141,6 +164,34 @@ window.onload = async () => {
         }
         const id = node.id.split('-').pop()
             renderModal(id)
+    }
+
+    function renderSelect() {
+        users.forEach(user => {
+            const option = document.createElement('option')
+            option.innerHTML = user.name
+            option.id = user.id
+            select.appendChild(option)
+        })
+    }
+
+    function selectChange(e) {
+        const id = e.target.options[e.target.selectedIndex].id
+        albumsContainer.innerHTML = ''
+        if (id === '0') {
+            albums.forEach(value => {
+                const phs = photos.get(value.id).slice(0,4)
+                renderAlbum(value, phs)
+            })
+        } else {
+            const filteredAlbums = new Map(
+                [...albums].filter(val => val[1].userId === Number(id))
+            )
+            filteredAlbums.forEach(value => {
+                const phs = photos.get(value.id).slice(0,4)
+                renderAlbum(value, phs)
+            })
+        }
     }
 
     modalLayout.onclick = function () {
