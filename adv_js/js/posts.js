@@ -98,6 +98,13 @@ class Post {
         const commentsContainer = document.createElement('div')
         commentsContainer.id = `comments-container-${this.id}`
         commentsContainer.className = 'section-hidden'
+
+        const loader = document.createElement('div')
+        loader.id = `loader-${this.id}`
+        loader.className = 'section-hidden'
+
+        commentsContainer.appendChild(loader)
+
         return commentsContainer
     }
 
@@ -235,18 +242,27 @@ window.onload = async () => {
         button.onclick = async function (e) {
             const buttonId = e.target.id.split('-').pop()
             const commentsContainer = document.querySelector(`#comments-container-${buttonId}`)
+            const loader = document.querySelector(`#loader-${buttonId}`)
             const className = commentsContainer.className
             if (className === 'section-hidden') {
                 commentsContainer.className = 'comments-container'
+                loader.className = 'loader'
                 button.innerHTML = 'Hide'
                 const comments = await getComments(buttonId)
                 comments.forEach(value => {
                     renderComments(commentsContainer, value.getDomComment())
                 })
-
+                loader.className = 'section-hidden'
             } else {
                 commentsContainer.className = 'section-hidden'
                 commentsContainer.innerHTML = ''
+
+                const loader = document.createElement('div')
+                loader.id = `loader-${buttonId}`
+                loader.className = 'section-hidden'
+
+                commentsContainer.appendChild(loader)
+
                 button.innerHTML = 'Show'
             }
         }

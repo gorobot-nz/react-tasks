@@ -1,4 +1,3 @@
-window.addEventListener("load", function (e) {
-    e.preventDefault()
+setTimeout(function () {
     window.location.replace('./html/posts.html')
-});
+}, 3000)
