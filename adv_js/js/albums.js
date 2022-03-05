@@ -8,7 +8,7 @@ class Album {
         this.userId = userId
     }
 
-    getDomAlbumHeader(){
+    getDomAlbumHeader() {
         const header = document.createElement('div')
         header.className = 'album-card-header'
 
@@ -24,10 +24,10 @@ class Album {
         return header
     }
 
-    getDomAlbumBody(photos){
+    getDomAlbumBody(photos) {
         const photosContainer = document.createElement('div')
         photosContainer.className = 'album-card-photos'
-        
+
         photos.forEach(item => {
             photosContainer.appendChild(item.getDomThumbinailPhoto())
         })
@@ -57,7 +57,7 @@ class Photo {
         this.thumbnailUrl = thumbnailUrl
     }
 
-    getDomThumbinailPhoto(){
+    getDomThumbinailPhoto() {
         const photoContainer = document.createElement('div')
         photoContainer.className = 'thumbnail-photo-container'
 
@@ -68,7 +68,7 @@ class Photo {
         return photoContainer
     }
 
-    getDomPhoto(){
+    getDomPhoto() {
         const photoContainer = document.createElement('div')
         photoContainer.className = 'fullsize-photo-container'
 
@@ -82,6 +82,9 @@ class Photo {
 
 window.onload = async () => {
     const albumsContainer = document.querySelector('#album-cards-container')
+    const modalLayout = document.querySelector('#modal-layout')
+    const modalTitle = document.querySelector('#modal-title')
+    const modalContent = document.querySelector('#modal-content')
 
     await getAlbums()
 
@@ -100,34 +103,50 @@ window.onload = async () => {
         const photosResponce = await fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}/photos`)
         const photosData = await photosResponce.json()
 
-        const temp = new Array()
+        const photosArray = new Array()
 
         photosData.forEach(async (item) => {
             const photo = new Photo(item.id, item.albumId, item.title, item.url, item.thumbnailUrl)
-            temp.push(photo)
+            photosArray.push(photo)
         });
-        photos.set(albumId, temp)
-        return temp.slice(0, 4)
+        photos.set(albumId, photosArray)
+        return photosArray.slice(0, 4)
     }
 
     function renderAlbum(album, photos) {
         const domAlbum = album.getDomAlbum(photos)
+        domAlbum.onclick = openAlbum
         albumsContainer.appendChild(domAlbum)
     }
-}
 
-const albumCardsContainer = document.querySelector('#album-cards-container')
-const albumCard = document.querySelector('#album-card')
-const modalLayout = document.querySelector('#modal-layout')
+    function renderModal(albumId) {
+        modalLayout.className = 'modal-layout'
 
+        const album = albums.get(Number(albumId))
+        const albumPhotos = photos.get(Number(albumId))
 
+        const title = document.createElement('h1')
+        title.innerHTML = album.title
+        modalTitle.appendChild(title) 
 
-albumCard.onclick = function () {
-    albumCardsContainer.className = 'section-hidden'
-    modalLayout.className = 'modal-layout'
-}
+        albumPhotos.forEach(photo => {
+            modalContent.appendChild(photo.getDomPhoto())
+        })
+    }
 
-modalLayout.onclick = function () {
-    modalLayout.className = 'section-hidden'
-    albumCardsContainer.className = 'album-cards-container'
+    function openAlbum(e) {
+        let node = e.target
+        while (!node.id.startsWith('album-card')) {
+            node = node.parentNode
+        }
+        const id = node.id.split('-').pop()
+            renderModal(id)
+    }
+
+    modalLayout.onclick = function () {
+        modalLayout.className = 'section-hidden'
+
+        modalTitle.innerHTML = ''
+        modalContent.innerHTML = ''
+    }
 }
