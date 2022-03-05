@@ -233,7 +233,6 @@ window.onload = async () => {
             const user = new User(item.id, item.name, item.username)
             users.set(user.id, user)
         });
-
     }
 
     async function getComments(postId) {

@@ -46,6 +46,11 @@ hr {
     flex-wrap: wrap;
 }
 
+
+.modal-window .modal-content::-webkit-scrollbar {
+    width: 0px;
+}
+
 .modal-window .modal-content .fullsize-photo-container {
     border-radius: 15px;
     margin: 10px;
@@ -64,7 +69,7 @@ hr {
     border: 2px black solid;
     border-radius: 15px;
     margin-top: 25px;
-    width: 550px;
+    width: 400px;
     margin: 20px;
     height: 480px;
     display: flex;
@@ -82,7 +87,7 @@ hr {
 .album-card .album-card-header .album-title {
     display: flex;
     justify-content: center;
-    width: 85%;
+    width: 100%;
 }
 
 .album-card .album-card-header .album-title h1 {
@@ -114,12 +119,12 @@ hr {
 .album-card .album-card-photos .thumbnail-photo-container {
     border-radius: 15px;
     margin: 10px;
-    height: 165px;
-    width: 255px;
+    height: 150px;
+    width: 150px;
     box-shadow: 3px 3px gray;
 }
 
-.album-card .album-card-photos .thumbnail-photo-container #thumbnail-photo {
+.album-card .album-card-photos .thumbnail-photo-container img {
     width: 100%;
     height: 100%;
     border-radius: 15px;
