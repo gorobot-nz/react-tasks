@@ -170,16 +170,68 @@ window.onload = async () => {
     await getPosts()
     await getUsers()
 
-    const main = document.querySelector('#main')
+    const select = document.querySelector('#users-select')
+    select.onchange = selectChange
+
+    const postsContainer = document.querySelector('#posts-container')
 
     posts.forEach(value => {
-        renderCard(value.getDomPost())
+        renderCard(value)
     })
 
-    const buttons = document.querySelectorAll(`[id^="comment-button"]`);
-    const userAvatars = document.querySelectorAll(`[id^="user-avatar"]`)
+    renderSelect()
 
-    buttons.forEach(button => {
+    async function getPosts() {
+        const postsResponce = await fetch('https://jsonplaceholder.typicode.com/posts')
+        const postsData = await postsResponce.json()
+        postsData.forEach(item => {
+            const post = new Post(item.id, item.userId, item.title, item.body)
+            posts.set(post.id, post)
+        });
+    }
+
+    async function getUsers() {
+        const usersResponce = await fetch('https://jsonplaceholder.typicode.com/users')
+        const usersData = await usersResponce.json()
+        usersData.forEach(item => {
+            const user = new User(item.id, item.name, item.username)
+            users.set(user.id, user)
+        });
+    }
+
+    async function getComments(postId) {
+        const comments = new Map()
+
+        const commentsResponce = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+        const commentsData = await commentsResponce.json()
+        commentsData.forEach(item => {
+            const comment = new Comment(item.id, item.postId, item.name, item.email, item.body)
+            comments.set(comment.id, comment)
+        });
+
+        return comments
+    }
+
+    function renderCard(card) {
+        postsContainer.appendChild(card.getDomPost())
+
+        const avatar = document.querySelector(`#user-avatar-${card.id}`)
+        const button = document.querySelector(`#comment-button-${card.id}`)
+
+        avatar.onclick = function (e) {
+            const avatarId = e.target.id.split('-').pop()
+            const userInfo = document.querySelector(`#user-info-${avatarId}`)
+            const cardTitle = document.querySelector(`#title-${avatarId}`)
+            const className = userInfo.className
+            if (className === 'post-card-user-info-container') {
+                userInfo.className = 'section-hidden'
+                cardTitle.className = 'post-title-h1'
+            } else {
+                userInfo.className = 'post-card-user-info-container'
+                cardTitle.className = 'section-hidden'
+            }
+        }
+
         button.onclick = async function (e) {
             const buttonId = e.target.id.split('-').pop()
             const commentsContainer = document.querySelector(`#comments-container-${buttonId}`)
@@ -198,62 +250,35 @@ window.onload = async () => {
                 button.innerHTML = 'Show'
             }
         }
-    })
-
-    userAvatars.forEach(avatar => {
-        avatar.onclick = function (e) {
-            const avatarId = e.target.id.split('-').pop()
-            const userInfo = document.querySelector(`#user-info-${avatarId}`)
-            const cardTitle = document.querySelector(`#title-${avatarId}`)
-            const className = userInfo.className
-            if (className === 'post-card-user-info-container') {
-                userInfo.className = 'section-hidden'
-                cardTitle.className = 'post-title-h1'
-            } else {
-                userInfo.className = 'post-card-user-info-container'
-                cardTitle.className = 'section-hidden'
-            }
-        }
-    })
-
-    async function getPosts() {
-        const postsResponce = await fetch('https://jsonplaceholder.typicode.com/posts')
-        const postsData = await postsResponce.json()
-        postsData.forEach(item => {
-            const post = new Post(item.id, item.userId, item.title, item.body)
-            posts.set(post.id, post)
-        });
-
-    }
-
-    async function getUsers() {
-        const usersResponce = await fetch('https://jsonplaceholder.typicode.com/users')
-        const usersData = await usersResponce.json()
-        usersData.forEach(item => {
-            const user = new User(item.id, item.name, item.username)
-            users.set(user.id, user)
-        });
-    }
-
-    async function getComments(postId) {
-
-        const comments = new Map()
-
-        const commentsResponce = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
-        const commentsData = await commentsResponce.json()
-        commentsData.forEach(item => {
-            const comment = new Comment(item.id, item.postId, item.name, item.email, item.body)
-            comments.set(comment.id, comment)
-        });
-
-        return comments
-    }
-
-    function renderCard(card) {
-        main.appendChild(card)
     }
 
     function renderComments(container, comment) {
         container.appendChild(comment)
+    }
+
+    function selectChange(e) {
+        const id = e.target.options[e.target.selectedIndex].id
+        postsContainer.innerHTML = ''
+        if (id === '0') {
+            posts.forEach(value => {
+                renderCard(value)
+            })
+        } else {
+            const filteredPosts = new Map(
+                [...posts].filter(val => val[1].userId === Number(id))
+            )
+            filteredPosts.forEach(value => {
+                renderCard(value)
+            })
+        }
+    }
+
+    function renderSelect() {
+        users.forEach(user => {
+            const option = document.createElement('option')
+            option.innerHTML = user.name
+            option.id = user.id
+            select.appendChild(option)
+        })
     }
 }

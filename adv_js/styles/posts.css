@@ -1,3 +1,10 @@
+.posts-container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .post-card {
     border: black 5px solid;
     border-radius: 20px;

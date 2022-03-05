@@ -59,3 +59,17 @@ header .header-container .link a {
     line-height: 25px;
     border-radius: 4px;
 }
+
+.select-container {
+    margin-top: 10px;
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+
+.select-container select {
+    width: 15%;
+    height: 100%;
+    border: 3px black solid;
+    border-radius: 10px;
+}  
