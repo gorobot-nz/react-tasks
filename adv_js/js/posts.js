@@ -179,6 +179,7 @@ window.onload = async () => {
 
     const select = document.querySelector('#users-select')
     select.onchange = selectChange
+    const mainLoader = document.querySelector('#main-loader')
 
     const postsContainer = document.querySelector('#posts-container')
 
@@ -296,5 +297,6 @@ window.onload = async () => {
             option.id = user.id
             select.appendChild(option)
         })
+        mainLoader.className='section-hidden'
     }
 }

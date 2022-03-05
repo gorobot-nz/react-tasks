@@ -95,12 +95,14 @@ window.onload = async () => {
     const modalTitle = document.querySelector('#modal-title')
     const modalContent = document.querySelector('#modal-content')
     const select = document.querySelector('#users-select')
+    const mainLoader = document.querySelector('#main-loader')
     select.onchange = selectChange
 
     await getAlbums()
     await getUsers()
 
     renderSelect()
+
 
     async function getAlbums() {
         const albumsResponce = await fetch('https://jsonplaceholder.typicode.com/albums')
@@ -173,6 +175,7 @@ window.onload = async () => {
             option.id = user.id
             select.appendChild(option)
         })
+        mainLoader.className='section-hidden'
     }
 
     function selectChange(e) {
