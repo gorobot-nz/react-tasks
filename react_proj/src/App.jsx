@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 
 
@@ -7,7 +7,10 @@ function App() {
   //dispatch(action(payload))
 
   return (
-    <AppRouter/>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
+
   );
 }
 
