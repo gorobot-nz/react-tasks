@@ -1,18 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import AppRouter from "./components/AppRouter";
 
 
 function App() {
-
-  const dispatch = useDispatch()
-
-  const books = useSelector(state => state.books.books)
-
+  //dispatch(action(payload))
 
   return (
-    <div>
-      {books}
-    </div>
+    <AppRouter/>
   );
 }
 
