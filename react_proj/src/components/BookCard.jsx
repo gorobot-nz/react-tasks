@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 import { useNavigate, useParams } from "react-router-dom";
 
 const BookCard = ({ book }) => {
@@ -8,13 +8,11 @@ const BookCard = ({ book }) => {
 
     return (
         <Card className='m-4' style={{ width: '17rem' }}>
-            <Card.Img className='mt-2' variant="top" src="https://i.ytimg.com/vi/RmRM5sYRMgY/maxresdefault.jpg" />
+            <Card.Img width='100%' height='400px' className='mt-2' variant="top" src={book.img} alt={book.img}/>
             <Card.Body>
                 <Card.Title>{book.title}</Card.Title>
                 <Card.Text>Price: {book.price}$</Card.Text>
-            </Card.Body>
-            <Card.Body>
-                <Card.Link onClick={() => navigate(`/books/${book.id}`)}>Details</Card.Link>
+                <Button variant='primary' onClick={() => navigate(`/books/${book.id}`)}>Details</Button>
             </Card.Body>
         </Card >
     )
