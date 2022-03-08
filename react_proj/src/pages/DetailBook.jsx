@@ -1,63 +1,20 @@
-import React from 'react';
-import { Container, Col, Image, Row, ListGroup, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Col, Image, Row, ListGroup, Button, Alert } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { addToCartAction } from '../redux/books/booksReducer';
 
 const DetailBook = () => {
-    const books = [
-        {
-            id: 1,
-            title: 'boo',
-            authors: [1, 2, 3],
-            price: 129,
-            img: "https://wallpapershome.ru/images/pages/pic_v/16158.jpg"
-        },
-        {
-            id: 2,
-            title: 'boo',
-            authors: [1, 2, 3],
-            price: 129,
-            img: "https://wallpapershome.ru/images/pages/pic_v/16158.jpg"
-        },
-        {
-            id: 3,
-            title: 'boo',
-            authors: [1, 2, 3],
-            price: 129,
-            img: "https://wallpapershome.ru/images/pages/pic_v/16158.jpg"
-        },
-        {
-            id: 4,
-            title: 'boo',
-            authors: [1, 2, 3],
-            price: 129,
-            img: "https://wallpapershome.ru/images/pages/pic_v/16158.jpg"
-        },
-        {
-            id: 5,
-            title: 'boo',
-            authors: [1, 2, 3],
-            price: 129,
-            img: "https://wallpapershome.ru/images/pages/pic_v/16158.jpg"
-        },
-        {
-            id: 6,
-            title: 'boo',
-            authors: [1, 2, 3],
-            price: 129,
-            img: "https://wallpapershome.ru/images/pages/pic_v/16158.jpg"
-        },
-        {
-            id: 7,
-            title: 'boo',
-            authors: [1, 2, 3],
-            price: 129,
-            img: "https://wallpapershome.ru/images/pages/pic_v/16158.jpg"
-        },
-    ]
-
     const { id } = useParams()
 
-    const book = books[id - 1]
+    const book = useSelector(state => state.books.books.find(book => book.id === Number(id)))
+
+    const dispatch = useDispatch()
+
+    const addToCart = (book) => {
+        dispatch(addToCartAction(book))
+    }
+
 
     return (
         <Container className="mt-5">
@@ -74,12 +31,12 @@ const DetailBook = () => {
                     </div>
                     <ListGroup className="mt-4">
                         {book.authors.map(author => (
-                            <ListGroup.Item>
+                            <ListGroup.Item key={author}>
                                 {author}
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
-                    <Button className='mt-5' variant="primary">
+                    <Button className='mt-5' variant="primary" onClick={() => addToCart(book)}>
                         Add to cart
                     </Button>
                 </Col>
