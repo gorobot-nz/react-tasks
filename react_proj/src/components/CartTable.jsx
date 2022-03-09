@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button, Image, Row, Modal } from 'react-bootstrap';
 import { removeFromCartAction } from '../redux/books/booksReducer';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import axios from "axios";
+
 
 const CartTable = () => {
     const [show, setShow] = useState(false);
@@ -16,7 +18,6 @@ const CartTable = () => {
     const booksCart = useSelector(state => state.books.booksCart)
     console.log(booksCart)
 
-
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -26,6 +27,44 @@ const CartTable = () => {
     const removeFromCart = (id) => {
         dispatch(removeFromCartAction(id))
         booksCart.filter(book => book.id !== id)
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (!stripe || !elements) {
+            return;
+        }
+
+        const cardElement = elements.getElement('card')
+
+        const { data: clientSecret } = await axios.post("http://localhost:8080/stripe/accept", {
+            price: booksCart.reduce((init, curr) => init + curr.book.price, 0) * 100
+        });
+        
+        const billingDetails = {
+            name: 'temp',
+        };
+
+        const paymentMethodReq = await stripe.createPaymentMethod({
+            type: "card",
+            card: cardElement,
+            billing_details: billingDetails
+        });
+
+        if (paymentMethodReq.error) {
+            console.log('paymentMethodErr', paymentMethodReq.error)
+            return;
+        }
+
+        const { error } = await stripe.confirmCardPayment(clientSecret.id, {
+            payment_method: paymentMethodReq.paymentMethod.id
+        });
+
+        if (error) {
+            console.log('final error', error)
+            return
+        }
     }
 
     return (
@@ -70,7 +109,7 @@ const CartTable = () => {
                     <CardElement />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleSubmit}>
                         {booksCart.reduce((init, curr) => init + curr.book.price, 0)}$
                     </Button>
                 </Modal.Footer>
