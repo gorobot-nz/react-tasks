@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button, Image, Row, Modal } from 'react-bootstrap';
 import { removeFromCartAction } from '../redux/books/booksReducer';
-import {CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 const CartTable = () => {
     const [show, setShow] = useState(false);
@@ -14,6 +14,8 @@ const CartTable = () => {
     const elements = useElements()
 
     const booksCart = useSelector(state => state.books.booksCart)
+    console.log(booksCart)
+
 
     const dispatch = useDispatch()
 
@@ -40,18 +42,18 @@ const CartTable = () => {
                 </thead>
                 <tbody>
                     {booksCart.map(book => (
-                        <tr key={book.id}>
-                            <td>{book.id}</td>
-                            <td>{book.title}</td>
-                            <td><Image width={50} height={100} src={book.img} /></td>
-                            <td>{book.price}</td>
-                            <td><Button onClick={() => { removeFromCart(book.id) }}>Удалить</Button></td>
+                        <tr key={book.book.id}>
+                            <td>{book.book.id}</td>
+                            <td>{book.book.title}</td>
+                            <td><Image width={100} height={150} src='https://images-na.ssl-images-amazon.com/images/I/81ww5rFJirL.jpg' /></td>
+                            <td>{book.book.price}</td>
+                            <td><Button onClick={() => { removeFromCart(book.book.id) }}>Удалить</Button></td>
                         </tr>
                     ))}
                     <tr>
                         <td>
                             <Row className='ms-3'>
-                                Total price: {booksCart.reduce((init, curr) => init + curr.price, 0)}
+                                Total price: {booksCart.reduce((init, curr) => init + curr.book.price, 0)}
                             </Row>
                             <Row className='ms-3'>
                                 <Button className='mt-2' style={{ width: '90%' }} variant='outline-success' onClick={handleShow}>Buy</Button>
@@ -65,14 +67,11 @@ const CartTable = () => {
                     <Modal.Title>Apply Payment</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <CardElement/>
+                    <CardElement />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
                     <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                        {booksCart.reduce((init, curr) => init + curr.book.price, 0)}$
                     </Button>
                 </Modal.Footer>
             </Modal>

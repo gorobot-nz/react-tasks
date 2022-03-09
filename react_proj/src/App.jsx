@@ -5,15 +5,13 @@ import AppRouter from "./components/AppRouter";
 
 
 function App() {
-  //dispatch(action(payload))
+    return (
+        <BrowserRouter>
+            <NavBar />
+            <AppRouter />
+        </BrowserRouter>
 
-  return (
-    <BrowserRouter>
-      <NavBar />
-      <AppRouter />
-    </BrowserRouter>
-
-  );
+    );
 }
 
 export default App;
