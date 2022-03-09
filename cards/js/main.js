@@ -33,13 +33,9 @@ class Card {
         this.setCardSideStyles(cardFrontSide, 'card-side card-front')
         this.setCardSideStyles(cardBackSide, 'card-side card-back')
 
-        const frontParagraph = document.createElement('p')
-        frontParagraph.innerHTML = this.id
-
         const backParagpaph = document.createElement('p')
         backParagpaph.innerHTML = this.text
 
-        cardFrontSide.appendChild(frontParagraph)
         cardBackSide.appendChild(backParagpaph)
 
         card.appendChild(cardFrontSide)

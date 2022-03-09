@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albums</title>
+    <link rel="stylesheet" type="text/css" href="../styles/albums.css">
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="link">
+                <a href="./posts.html">Posts</a>
+            </div>
+            <div class="link">
+                <a href="./albums.html">Albums</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="select-container">
+            <select id="users-select">
+                <option id="0">All</option>
+            </select>
+        </div>
+        <div id="main-loader" class="loader"></div>
+        <div id="album-cards-container" class="album-cards-container">
+        </div>
+        <div id="modal-layout" class="section-hidden">
+            <div class="modal-window">
+                <div id="modal-title" class="modal-title">
+                </div>
+                <hr>
+                <div id="modal-content" class="modal-content">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/albums.js"></script>
+</body>
+
+</html>
