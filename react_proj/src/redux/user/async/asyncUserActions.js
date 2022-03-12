@@ -21,6 +21,7 @@ export const signIn = (username, password) => {
             username: username,
             password: password,
         })
+        localStorage.setItem('token', data.token)
         const decodedData = jwtDecode(data.token)
         dispatch(setUserAction({
             id: decodedData.user_id,
