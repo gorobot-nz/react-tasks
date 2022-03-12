@@ -8,6 +8,7 @@ const DetailBook = () => {
     const { id } = useParams()
 
     const book = useSelector(state => state.books.books.find(book => book.book.id === Number(id)))
+    console.log(book)
 
     const dispatch = useDispatch()
 
@@ -23,27 +24,36 @@ const DetailBook = () => {
                 </Col>
                 <Col>
                     <div>
-                        Title: {book.book.title}
+                        Title: {book?.book.title}
                     </div>
                     <div>
-                        Description: {book.book.description}
+                        Description: {book?.book.description}
                     </div>
                     <div>
-                        Price: {book.book.price}$
+                        Price: {book?.book.price}$
+                    </div>
+                    <div>
+                        Available books: {book?.book.booksCount}
                     </div>
                     <div className='mt-5'>
                         Author:
                     </div>
-                    <ListGroup style={{width: '200px'}}>
-                        {book.authors.map(author => (
+                    <ListGroup style={{ width: '200px' }}>
+                        {book?.authors.map(author => (
                             <ListGroup.Item key={author.id}>
                                 {author.name} {author.surname}
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
-                    <Button className='mt-5' variant="primary" onClick={() => addToCart(book)}>
-                        Add to cart
-                    </Button>
+                    {book.book.booksCount === 0 ?
+                        <Button className='mt-5' variant="primary" disabled>
+                            There are no books
+                        </Button>
+                        :
+                        <Button className='mt-5' variant="primary" onClick={() => addToCart(book)}>
+                            Add to cart
+                        </Button>
+                    }
                 </Col>
             </Row>
         </Container>

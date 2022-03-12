@@ -20,7 +20,7 @@ const BooksList = () => {
     return (
         <>
             {
-                books.map(book => (
+                books?.map(book => (
                     <BookCard key={book.book.id} book={book} />
                 ))
             }

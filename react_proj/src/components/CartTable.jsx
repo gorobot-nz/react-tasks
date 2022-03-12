@@ -80,7 +80,7 @@ const CartTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {booksCart.map(book => (
+                    {booksCart?.map(book => (
                         <tr key={book.book.id}>
                             <td>{book.book.id}</td>
                             <td>{book.book.title}</td>

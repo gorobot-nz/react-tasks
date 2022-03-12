@@ -7,7 +7,7 @@ import { setUserAction, setIsAuthAction } from "../redux/user/userReducer"
 
 const NavBar = () => {
     const navigate = useNavigate()
-    const { isAuth } = useSelector(state => state.user)
+    const { user, isAuth } = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     const handleButton = () => {
@@ -27,6 +27,12 @@ const NavBar = () => {
                                 <Nav.Link onClick={() => navigate(routes.CART)}>Cart</Nav.Link>
                             </Nav>
                             <Nav>
+                                {
+                                    user.roleId === 2 ?
+                                        <Button className="ms-5" variant="outline-success" onClick={() => navigate(routes.ADMIN)}>Admin</Button>
+                                        :
+                                        <></>
+                                }
                                 <Button className="ms-5" variant="outline-success" onClick={handleButton}>Leave</Button>
                             </Nav>
                         </>
