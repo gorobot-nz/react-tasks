@@ -16,6 +16,8 @@ const CartTable = () => {
     const elements = useElements()
 
     const booksCart = useSelector(state => state.books.booksCart)
+    const user = useSelector(state => state.user.user)
+    console.log(user)
     console.log(booksCart)
 
     const dispatch = useDispatch()
@@ -41,9 +43,9 @@ const CartTable = () => {
         const { data: clientSecret } = await axios.post("http://localhost:8080/stripe/accept", {
             price: booksCart.reduce((init, curr) => init + curr.book.price, 0) * 100
         });
-        
+
         const billingDetails = {
-            name: 'temp',
+            name: user.name
         };
 
         const paymentMethodReq = await stripe.createPaymentMethod({
@@ -95,7 +97,14 @@ const CartTable = () => {
                                 Total price: {booksCart.reduce((init, curr) => init + curr.book.price, 0)}
                             </Row>
                             <Row className='ms-3'>
-                                <Button className='mt-2' style={{ width: '90%' }} variant='outline-success' onClick={handleShow}>Buy</Button>
+                                {
+                                    booksCart.reduce((init, curr) => init + curr.book.price, 0) === 0
+                                        ?
+                                        <Button className='mt-2' style={{ width: '90%' }} variant='outline-success' disabled>Cart is empty</Button>
+
+                                        :
+                                        <Button className='mt-2' style={{ width: '90%' }} variant='outline-success' onClick={handleShow}>Buy</Button>
+                                }
                             </Row>
                         </td>
                     </tr>

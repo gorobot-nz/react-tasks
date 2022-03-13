@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Image, Row, ListGroup, Button, Alert, ListGroupItem } from 'react-bootstrap';
+import { Container, Col, Image, Row, ListGroup, Button, Toast } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addToCartAction } from '../redux/books/booksReducer';
 
 const DetailBook = () => {
     const { id } = useParams()
-
     const book = useSelector(state => state.books.books.find(book => book.book.id === Number(id)))
-    console.log(book)
 
     const dispatch = useDispatch()
-
     const addToCart = (book) => {
         dispatch(addToCartAction(book))
+        setShow(true)
     }
+
+    const [show, setShow] = useState(false)
 
     return (
         <Container className="mt-5">
@@ -55,6 +55,19 @@ const DetailBook = () => {
                         </Button>
                     }
                 </Col>
+            </Row>
+            <Row className='mt-5'>
+                <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                    <Toast.Header>
+                        <img
+                            src="holder.js/20x20?text=%20"
+                            className="rounded me-2"
+                            alt=""
+                        />
+                        <strong className="me-auto">Cart Alert</strong>
+                    </Toast.Header>
+                    <Toast.Body>You are add {book.book.title} at cart</Toast.Body>
+                </Toast>
             </Row>
         </Container>
     );
