@@ -3,6 +3,7 @@ import { Row } from 'react-bootstrap'
 import BookCard from "./BookCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks } from "../redux/books/async/asyncBooksActions";
+import { fetchAuhtors } from "../redux/authors/async/asyncAuthorsActions";
 
 const BooksList = () => {
 
@@ -10,11 +11,14 @@ const BooksList = () => {
 
     useEffect(() => {
         dispatch(fetchBooks())
+        dispatch(fetchAuhtors())
     }, [])
 
     const books = useSelector(state => state.books.books)
+    const authors = useSelector(state => state.authors.authors)
 
     console.log(books)
+    console.log(authors)
 
 
     return (

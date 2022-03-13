@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BookForm from "../components/forms/BookForm";
 import AuthorForm from "../components/forms/AuthorForm";
 import { deleteBook } from "../redux/books/async/asyncBooksActions"
+import { fetchAuhtors } from "../redux/authors/async/asyncAuthorsActions";
 
 const AdminPage = () => {
     const books = useSelector(state => state.books.books)
@@ -25,6 +26,7 @@ const AdminPage = () => {
     const handleAddAuthor = () => {
         setFormType('add-author')
         setShow(true)
+        dispatch(fetchAuhtors())
     }
 
     const handleAddBook = () => {
@@ -101,14 +103,6 @@ const AdminPage = () => {
                         <AuthorForm />
                     }
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
             </Modal>
         </Container>
     )
