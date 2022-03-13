@@ -11,7 +11,6 @@ export const signUp = (username, password, name, surname) => {
             name: name,
             surname: surname
         })
-        console.log(data)
     }
 }
 

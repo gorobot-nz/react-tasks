@@ -10,8 +10,6 @@ const AdminPage = () => {
     const books = useSelector(state => state.books.books)
     const dispatch = useDispatch()
 
-    console.log(books)
-
     const [show, setShow] = useState(false);
     const [formType, setFormType] = useState('')
 
@@ -38,7 +36,6 @@ const AdminPage = () => {
 
     }
 
-    console.log(books)
     return (
         <Container className="mt-5">
             <Row md={24}>

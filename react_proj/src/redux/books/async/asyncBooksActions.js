@@ -30,7 +30,6 @@ export const addBook = (book, authorId) => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
-        console.log(data)
         dispatch(fetchBooks())
     }
 }
@@ -42,7 +41,6 @@ export const deleteBook = (id) => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log(data)
         dispatch(fetchBooks())
     }
 }

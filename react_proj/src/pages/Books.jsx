@@ -4,11 +4,6 @@ import { useSelector } from 'react-redux';
 import BooksList from '../components/BooksList';
 
 const Books = () => {
-
-    const {user} = useSelector(state => state.user)
-
-    console.log(user)
-
     return (
         <Container>
             <Row className='d-flex justify-content-center mt-2'>

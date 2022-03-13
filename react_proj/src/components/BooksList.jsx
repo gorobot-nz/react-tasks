@@ -15,11 +15,6 @@ const BooksList = () => {
     }, [])
 
     const books = useSelector(state => state.books.books)
-    const authors = useSelector(state => state.authors.authors)
-
-    console.log(books)
-    console.log(authors)
-
 
     return (
         <>

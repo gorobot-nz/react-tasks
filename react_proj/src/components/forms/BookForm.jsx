@@ -23,8 +23,6 @@ const BookForm = () => {
 
     function handleChange(evt) {
         const value = evt.target.value;
-        console.log(evt.target.name)
-        console.log(value)
         setBook({
             ...book,
             [evt.target.name]: value

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, Button, Image, Row, Modal } from 'react-bootstrap';
-import { removeFromCartAction } from '../redux/books/booksReducer';
+import { Table, Button, Image, Row, Modal, Toast } from 'react-bootstrap';
+import { removeFromCartAction, setCartAction } from '../redux/books/booksReducer';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from "axios";
 
 
 const CartTable = () => {
     const [show, setShow] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -17,8 +18,6 @@ const CartTable = () => {
 
     const booksCart = useSelector(state => state.books.booksCart)
     const user = useSelector(state => state.user.user)
-    console.log(user)
-    console.log(booksCart)
 
     const dispatch = useDispatch()
 
@@ -54,6 +53,8 @@ const CartTable = () => {
             billing_details: billingDetails
         });
 
+        setShow(false)
+
         if (paymentMethodReq.error) {
             console.log('paymentMethodErr', paymentMethodReq.error)
             return;
@@ -67,6 +68,8 @@ const CartTable = () => {
             console.log('final error', error)
             return
         }
+        dispatch(setCartAction([]))
+        setShowToast(true)
     }
 
     return (
@@ -87,14 +90,14 @@ const CartTable = () => {
                             <td>{book.book.id}</td>
                             <td>{book.book.title}</td>
                             <td><Image width={100} height={150} src='https://images-na.ssl-images-amazon.com/images/I/81ww5rFJirL.jpg' /></td>
-                            <td>{book.book.price}</td>
+                            <td>{book.book.price}$</td>
                             <td><Button onClick={() => { removeFromCart(book.book.id) }}>Удалить</Button></td>
                         </tr>
                     ))}
                     <tr>
                         <td>
                             <Row className='ms-3'>
-                                Total price: {booksCart.reduce((init, curr) => init + curr.book.price, 0)}
+                                Total price: {booksCart.reduce((init, curr) => init + curr.book.price, 0)}$
                             </Row>
                             <Row className='ms-3'>
                                 {
@@ -110,6 +113,19 @@ const CartTable = () => {
                     </tr>
                 </tbody>
             </Table>
+            <Row>
+                <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
+                    <Toast.Header>
+                        <img
+                            src="holder.js/20x20?text=%20"
+                            className="rounded me-2"
+                            alt=""
+                        />
+                        <strong className="me-auto">Cart Alert</strong>
+                    </Toast.Header>
+                    <Toast.Body>Success payment</Toast.Body>
+                </Toast>
+            </Row>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Apply Payment</Modal.Title>
