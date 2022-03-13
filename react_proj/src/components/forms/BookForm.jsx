@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { createRef, useState } from 'react'
 import { Form, Button, Dropdown } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { addBook } from '../../redux/books/async/asyncBooksActions'
 
 const BookForm = () => {
 
@@ -10,6 +12,12 @@ const BookForm = () => {
         count: '',
         date: '',
     })
+
+    const dispatch = useDispatch()
+
+    const selectRef = createRef
+
+    const authors = useSelector(state => state.authors.authors)
 
     const [auhtorId, setAuthorId] = useState(0)
 
@@ -24,7 +32,7 @@ const BookForm = () => {
     }
 
     const handleClick = () => {
-        console.log(book)
+        dispatch(addBook(book, auhtorId))
     }
 
     return (
@@ -54,11 +62,17 @@ const BookForm = () => {
                 <Form.Control type="text" placeholder="Enter publishing year" name='date' value={book.date} onChange={handleChange} />
             </Form.Group>
 
-            <Dropdown.Menu show>
-                <Dropdown.Header>Auhtor</Dropdown.Header>
-                <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
-            </Dropdown.Menu>
+            <Form.Group className="mb-3" controlId="formBasicYear">
+                <Form.Label>Author</Form.Label>
+                <Form.Select onChange={(e) => setAuthorId(Number(e.target.value))} aria-label="Default select example">
+                    <option value='0' disabled ref={selectRef}>Select author</option>
+                    {
+                        authors.map(author => (
+                            <option key={author.author.id} value={author.author.id}>{author.author.name} {author.author.surname}</option>
+                        ))
+                    }
+                </Form.Select>
+            </Form.Group>
 
             <Button onClick={handleClick}>
                 Add
