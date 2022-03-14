@@ -60,17 +60,23 @@ const BookForm = ({ b, isEdit }) => {
                 <Form.Control type="text" placeholder="Enter publishing year" name='date' value={book.date} onChange={handleChange} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicYear">
-                <Form.Label>Author</Form.Label>
-                <Form.Select onChange={(e) => setAuthorId(Number(e.target.value))} aria-label="Default select example">
-                    <option value='0' ref={selectRef}>Select author</option>
-                    {
-                        authors.map(author => (
-                            <option key={author.author.id} value={author.author.id}>{author.author.name} {author.author.surname}</option>
-                        ))
-                    }
-                </Form.Select>
-            </Form.Group>
+            {
+                isEdit
+                    ?
+                    <></>
+                    :
+                    <Form.Group className="mb-3" controlId="formBasicAuthor">
+                        <Form.Label>Author</Form.Label>
+                        <Form.Select onChange={(e) => setAuthorId(Number(e.target.value))} aria-label="Default select example">
+                            <option value='0' ref={selectRef}>Select author</option>
+                            {
+                                authors.map(author => (
+                                    <option key={author.author.id} value={author.author.id}>{author.author.name} {author.author.surname}</option>
+                                ))
+                            }
+                        </Form.Select>
+                    </Form.Group>
+            }
 
             <Button onClick={handleClick}>
                 Add
