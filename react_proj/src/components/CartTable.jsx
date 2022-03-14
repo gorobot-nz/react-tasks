@@ -4,6 +4,8 @@ import { Table, Button, Image, Row, Modal, Toast } from 'react-bootstrap';
 import { removeFromCartAction, setCartAction } from '../redux/books/booksReducer';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from "axios";
+import { addOrder } from '../redux/orders/async/asyncOrdersReducers';
+import { fetchBooks } from '../redux/books/async/asyncBooksActions';
 
 
 const CartTable = () => {
@@ -19,7 +21,10 @@ const CartTable = () => {
     const booksCart = useSelector(state => state.books.booksCart)
     const user = useSelector(state => state.user.user)
 
+    const price = booksCart.reduce((init, curr) => init + curr.book.price, 0)
+
     const dispatch = useDispatch()
+
 
     useEffect(() => {
 
@@ -40,7 +45,7 @@ const CartTable = () => {
         const cardElement = elements.getElement('card')
 
         const { data: clientSecret } = await axios.post("http://localhost:8080/stripe/accept", {
-            price: booksCart.reduce((init, curr) => init + curr.book.price, 0) * 100
+            price: price * 100
         });
 
         const billingDetails = {
@@ -69,6 +74,11 @@ const CartTable = () => {
             return
         }
         dispatch(setCartAction([]))
+
+        const books = booksCart.map(book => book.book.id)
+
+        dispatch(addOrder(user.id, price, books))
+        dispatch(fetchBooks())
         setShowToast(true)
     }
 
@@ -97,11 +107,11 @@ const CartTable = () => {
                     <tr>
                         <td>
                             <Row className='ms-3'>
-                                Total price: {booksCart.reduce((init, curr) => init + curr.book.price, 0)}$
+                                Total price: {price}$
                             </Row>
                             <Row className='ms-3'>
                                 {
-                                    booksCart.reduce((init, curr) => init + curr.book.price, 0) === 0
+                                    price === 0
                                         ?
                                         <Button className='mt-2' style={{ width: '90%' }} variant='outline-success' disabled>Cart is empty</Button>
 
@@ -135,7 +145,7 @@ const CartTable = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleSubmit}>
-                        {booksCart.reduce((init, curr) => init + curr.book.price, 0)}$
+                        {price}$
                     </Button>
                 </Modal.Footer>
             </Modal>

@@ -22,8 +22,6 @@ const Orders = () => {
         return books.find(book => book.book.id === id).book.title
     }
 
-    console.log(getTitle(8))
-
     return (
         <Table striped bordered hover>
             <thead>
@@ -39,7 +37,7 @@ const Orders = () => {
                         <tr key={order.order.id}>
                             <td>{order.order.id}</td>
                             <td>{order.order.totalPrice}</td>
-                            <td>
+                            <td style={{width: '400px'}}>
                                 <ListGroup>
                                     {order.books.map(bookId => (
                                         <ListGroup.Item key={bookId}>
