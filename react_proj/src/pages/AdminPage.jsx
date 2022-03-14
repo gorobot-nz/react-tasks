@@ -10,6 +10,20 @@ const AdminPage = () => {
     const books = useSelector(state => state.books.books)
     const dispatch = useDispatch()
 
+    const [book, setBook] = useState({
+        title: '',
+        price: '',
+        description: '',
+        booksCount: '',
+        date: '',
+    })
+    const [author, setAuthor] = useState({
+        name: '',
+        surname: '',
+    })
+
+    const [isEdit, setIsEdit] = useState(false)
+
     const [show, setShow] = useState(false);
     const [formType, setFormType] = useState('')
 
@@ -17,23 +31,37 @@ const AdminPage = () => {
     const handleShow = () => setShow(true);
 
 
-    const handleDelete = (id) => {
+    const handleDeleteBook = (id) => {
         dispatch(deleteBook(id))
     }
 
     const handleAddAuthor = () => {
         setFormType('add-author')
-        setShow(true)
-        dispatch(fetchAuhtors())
+        setAuthor({
+            name: '',
+            surname: '',
+        })
+        handleShow()
     }
 
     const handleAddBook = () => {
         setFormType('add-book')
-        setShow(true)
+        setIsEdit(false)
+        setBook({
+            title: '',
+            price: '',
+            description: '',
+            booksCount: '',
+            date: '',
+        })
+        handleShow()
     }
 
-    const handleEditBook = (id) => {
-
+    const handleEditBook = (book) => {
+        setFormType('edit-book')
+        setIsEdit(true)
+        setBook(book.book)
+        handleShow()
     }
 
     return (
@@ -79,8 +107,8 @@ const AdminPage = () => {
                                             </ListGroup>
                                         </td>
                                         <td>
-                                            <Button>Edit</Button>
-                                            <Button className="ms-3" onClick={() => { handleDelete(book.book.id) }}>Delete</Button>
+                                            <Button onClick={() => { handleEditBook(book) }}>Edit</Button>
+                                            <Button className="ms-3" onClick={() => { handleDeleteBook(book.book.id) }}>Delete</Button>
                                         </td>
                                     </tr>
                                 ))
@@ -94,10 +122,10 @@ const AdminPage = () => {
                     <Modal.Title>Modal</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {formType === 'add-book' ?
-                        <BookForm />
+                    {formType === 'add-book' || formType === 'edit-book' ?
+                        <BookForm b={book} isEdit={isEdit} />
                         :
-                        <AuthorForm />
+                        <AuthorForm a={author} />
                     }
                 </Modal.Body>
             </Modal>

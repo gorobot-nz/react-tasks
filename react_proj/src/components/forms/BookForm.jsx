@@ -1,17 +1,12 @@
-import React, { createRef, useState } from 'react'
-import { Form, Button, Dropdown } from 'react-bootstrap'
+import React, { createRef, useState, useEffect } from 'react'
+import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBook } from '../../redux/books/async/asyncBooksActions'
+import { addBook, editBook } from '../../redux/books/async/asyncBooksActions'
 
-const BookForm = () => {
+const BookForm = ({ b, isEdit }) => {
+    b.date = b.date.slice(0, 4)
 
-    const [book, setBook] = useState({
-        title: '',
-        price: '',
-        description: '',
-        count: '',
-        date: '',
-    })
+    const [book, setBook] = useState(b)
 
     const dispatch = useDispatch()
 
@@ -19,7 +14,7 @@ const BookForm = () => {
 
     const authors = useSelector(state => state.authors.authors)
 
-    const [auhtorId, setAuthorId] = useState(0)
+    const [authorId, setAuthorId] = useState(0)
 
     function handleChange(evt) {
         const value = evt.target.value;
@@ -27,10 +22,15 @@ const BookForm = () => {
             ...book,
             [evt.target.name]: value
         });
+        console.log(book)
     }
 
     const handleClick = () => {
-        dispatch(addBook(book, auhtorId))
+        if (isEdit) {
+            dispatch(editBook(book))
+        } else {
+            dispatch(addBook(book, authorId))
+        }
     }
 
     return (
@@ -47,7 +47,7 @@ const BookForm = () => {
 
             <Form.Group className="mb-3" controlId="formBasicCount">
                 <Form.Label>Count</Form.Label>
-                <Form.Control type="text" placeholder="Enter available count" name='count' value={book.count} onChange={handleChange} />
+                <Form.Control type="text" placeholder="Enter available count" name='booksCount' value={book.booksCount} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicDescription">
@@ -63,7 +63,7 @@ const BookForm = () => {
             <Form.Group className="mb-3" controlId="formBasicYear">
                 <Form.Label>Author</Form.Label>
                 <Form.Select onChange={(e) => setAuthorId(Number(e.target.value))} aria-label="Default select example">
-                    <option value='0' disabled ref={selectRef}>Select author</option>
+                    <option value='0' ref={selectRef}>Select author</option>
                     {
                         authors.map(author => (
                             <option key={author.author.id} value={author.author.id}>{author.author.name} {author.author.surname}</option>

@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { addAuthor } from '../../redux/authors/async/asyncAuthorsActions'
 
-const AuthorForm = () => {
-    const [author, setAuthor] = useState({
-        name: '',
-        surname: '',
-    })
+const AuthorForm = ({ a }) => {
+    const [author, setAuthor] = useState(a)
 
     const dispatch = useDispatch()
 

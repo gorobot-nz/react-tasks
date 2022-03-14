@@ -18,7 +18,7 @@ export const addBook = (book, authorId) => {
             {
                 book: {
                     title: book.title,
-                    booksCount: Number(book.count),
+                    booksCount: Number(book.booksCount),
                     description: book.description,
                     price: Number(book.price),
                     date: book.date
@@ -41,6 +41,25 @@ export const deleteBook = (id) => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
+        dispatch(fetchBooks())
+    }
+}
+
+export const editBook = (book) => {
+    return async function (dispatch) {
+        const { data } = await axios.put(`http://localhost:8080/api/book/${book.id}`,
+            {
+                title: book.title,
+                booksCount: Number(book.booksCount),
+                description: book.description,
+                price: Number(book.price),
+                date: book.date
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
         dispatch(fetchBooks())
     }
 }
