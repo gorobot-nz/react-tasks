@@ -25,6 +25,7 @@ const NavBar = () => {
                             <Nav className="me-auto">
                                 <Nav.Link onClick={() => navigate(routes.BOOKS)}>Books</Nav.Link>
                                 <Nav.Link onClick={() => navigate(routes.CART)}>Cart</Nav.Link>
+                                <Nav.Link onClick={() => navigate(routes.ORDERS)}>Orders</Nav.Link>
                             </Nav>
                             <Nav>
                                 {
