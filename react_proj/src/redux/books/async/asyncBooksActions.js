@@ -12,7 +12,7 @@ export const fetchBooks = () => {
     }
 }
 
-export const addBook = (book, authorId) => {
+export const addBook = (book, authorIds) => {
     return async function (dispatch) {
         const { data } = await axios.post(`http://localhost:8080/api/book`,
             {
@@ -23,7 +23,7 @@ export const addBook = (book, authorId) => {
                     price: Number(book.price),
                     date: book.date
                 },
-                authors: [authorId]
+                authors: authorIds
             },
             {
                 headers: {

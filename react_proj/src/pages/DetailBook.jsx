@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Container, Col, Image, Row, ListGroup, Button, Toast } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { fetchBooks } from '../redux/books/async/asyncBooksActions';
 import { addToCartAction } from '../redux/books/booksReducer';
 
 const DetailBook = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchBooks())
+    }, [])
+
     const { id } = useParams()
     const book = useSelector(state => state.books.books.find(book => book.book.id === Number(id)))
 
-    const dispatch = useDispatch()
     const addToCart = (book) => {
         dispatch(addToCartAction(book))
         setShow(true)

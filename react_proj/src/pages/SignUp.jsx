@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Card } from 'react-bootstrap'
+import { Form, Button, Container, Card, Toast, Row } from 'react-bootstrap'
 import { signUp } from '../redux/user/async/asyncUserActions'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignUp = () => {
     const [username, setUsername] = useState('')
@@ -9,11 +9,15 @@ const SignUp = () => {
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
 
+    const [show, setShow] = useState(false)
+
     const dispatch = useDispatch()
+    const isError = useSelector(state => state.user.isError)
 
     function submitForm(e) {
         e.preventDefault()
         dispatch(signUp(username, password, name, surname))
+        setShow(true)
     }
 
     return (
@@ -47,6 +51,28 @@ const SignUp = () => {
                     </Form>
                 </Card.Body>
             </Card>
+            <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                <Toast.Header>
+                    <img
+                        src="holder.js/20x20?text=%20"
+                        className="rounded me-2"
+                        alt=""
+                    />
+                    <strong className="me-auto">Sign up message</strong>
+                </Toast.Header>
+                <Toast.Body>
+                    {isError ?
+                        <>
+                            Error
+                        </>
+                        :
+                        <>
+                            Success
+                        </>
+                    }
+                </Toast.Body>
+            </Toast>
+
         </Container>
     )
 }

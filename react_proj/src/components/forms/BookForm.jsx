@@ -1,5 +1,5 @@
 import React, { createRef, useState, useEffect } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { addBook, editBook } from '../../redux/books/async/asyncBooksActions'
 
@@ -10,11 +10,23 @@ const BookForm = ({ b, isEdit }) => {
 
     const dispatch = useDispatch()
 
-    const selectRef = createRef
-
     const authors = useSelector(state => state.authors.authors)
 
-    const [authorId, setAuthorId] = useState(0)
+    const [authorIds, setAuthorIds] = useState([0])
+    
+    function addAuthor() {
+        setAuthorIds([...authorIds, 0])
+    }
+
+    function removeAuthor(index) {
+        setAuthorIds(authorIds.filter((item, i) => index !== i))
+    }
+
+    function changeAuhtor(id, index) {
+        authorIds[index] = id
+        setAuthorIds(authorIds)
+        console.log(authorIds)
+    }
 
     function handleChange(evt) {
         const value = evt.target.value;
@@ -29,7 +41,7 @@ const BookForm = ({ b, isEdit }) => {
         if (isEdit) {
             dispatch(editBook(book))
         } else {
-            dispatch(addBook(book, authorId))
+            dispatch(addBook(book, authorIds))
         }
     }
 
@@ -66,15 +78,28 @@ const BookForm = ({ b, isEdit }) => {
                     <></>
                     :
                     <Form.Group className="mb-3" controlId="formBasicAuthor">
-                        <Form.Label>Author</Form.Label>
-                        <Form.Select onChange={(e) => setAuthorId(Number(e.target.value))} aria-label="Default select example">
-                            <option value='0' ref={selectRef}>Select author</option>
-                            {
-                                authors.map(author => (
-                                    <option key={author.author.id} value={author.author.id}>{author.author.name} {author.author.surname}</option>
-                                ))
-                            }
-                        </Form.Select>
+                        <Form.Label>Authors</Form.Label>
+
+                        {
+                            authorIds.map((item, index) => (
+                                <Row key={index}>
+                                    <Form.Select className='mt-2 ms-2' onChange={(e) => changeAuhtor(Number(e.target.value), index)} aria-label="Default select example"
+                                        style={{ width: '350px' }}>
+                                        <option value='0'>Select author</option>
+                                        {
+                                            authors.map(author => (
+                                                <option key={author.author.id} value={author.author.id}>{author.author.name} {author.author.surname}</option>
+                                            ))
+                                        }
+                                    </Form.Select>
+                                    <Button className='mt-2 ms-3' style={{ width: '100px' }} onClick={() => { removeAuthor(index) }}>Remove</Button>
+                                </Row>
+                            ))
+                        }
+
+                        <Row className='d-flex flex-row mt-3 justify-content-around'>
+                            <Button style={{ width: '100px' }} onClick={addAuthor}>Add</Button>
+                        </Row>
                     </Form.Group>
             }
 

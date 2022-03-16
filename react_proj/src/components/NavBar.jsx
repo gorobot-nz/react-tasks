@@ -13,6 +13,7 @@ const NavBar = () => {
     const handleButton = () => {
         dispatch(setUserAction({}))
         dispatch(setIsAuthAction(false))
+        localStorage.removeItem('token')
     }
 
     return (
