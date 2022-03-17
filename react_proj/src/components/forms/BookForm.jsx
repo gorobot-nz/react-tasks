@@ -13,13 +13,18 @@ const BookForm = ({ b, isEdit }) => {
     const authors = useSelector(state => state.authors.authors)
 
     const [authorIds, setAuthorIds] = useState([0])
-    
+
     function addAuthor() {
         setAuthorIds([...authorIds, 0])
+        console.log(authorIds)
     }
 
     function removeAuthor(index) {
-        setAuthorIds(authorIds.filter((item, i) => index !== i))
+        if (authorIds.length === 1) {
+            return
+        }
+        setAuthorIds(authorIds.splice(index, 1))
+        console.log(authorIds)
     }
 
     function changeAuhtor(id, index) {
@@ -38,9 +43,14 @@ const BookForm = ({ b, isEdit }) => {
     }
 
     const handleClick = () => {
+        console.log('click')
         if (isEdit) {
             dispatch(editBook(book))
         } else {
+            if (authorIds.length === 0 || authorIds.indexOf(0) !== -1) {
+                console.log('bruh')
+                return
+            }
             dispatch(addBook(book, authorIds))
         }
     }
@@ -71,7 +81,6 @@ const BookForm = ({ b, isEdit }) => {
                 <Form.Label>Year</Form.Label>
                 <Form.Control type="text" placeholder="Enter publishing year" name='date' value={book.date} onChange={handleChange} />
             </Form.Group>
-
             {
                 isEdit
                     ?
@@ -102,7 +111,6 @@ const BookForm = ({ b, isEdit }) => {
                         </Row>
                     </Form.Group>
             }
-
             <Button onClick={handleClick}>
                 Add
             </Button>
